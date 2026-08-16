@@ -26,8 +26,7 @@ bot/discord_bot.py       # Discord handlers (/sync /resume /fatigue /nutrition)
 ## 🚀 Installation
 
 ```bash
-# Copy and fill in your credentials
-cp .env.example .env
+# Create a .env file and fill in your credentials (see Environment variables below)
 
 # Create virtual environment
 python -m venv .venv
