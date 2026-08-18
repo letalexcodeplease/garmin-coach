@@ -38,7 +38,7 @@ async def cmd_resume(ctx):
     await ctx.send("⏳ Thinking...")
     context = build_context(days=7)
     response = ask_coach("Give me a summary of my week and tell me how I'm doing overall.", context)
-    await ctx.send(response)
+    await send_long(ctx, response)
 
 
 @bot.command(name="fatigue")
@@ -46,7 +46,7 @@ async def cmd_fatigue(ctx):
     await ctx.send("⏳ Thinking...")
     context = build_context(days=5)
     response = ask_coach("Am I fatigued? Should I train today or rest?", context)
-    await ctx.send(response)
+    await send_long(ctx, response)
 
 
 @bot.command(name="nutrition")
@@ -54,7 +54,7 @@ async def cmd_nutrition(ctx):
     await ctx.send("⏳ Thinking...")
     context = build_context(days=3)
     response = ask_coach("What should I eat today based on my activity and recovery?", context)
-    await ctx.send(response)
+    await send_long(ctx, response)
 
 
 @bot.event
@@ -66,7 +66,13 @@ async def on_message(message):
         await message.channel.send("⏳ Thinking...")
         context = build_context(days=7)
         response = ask_coach(message.content, context)
-        await message.channel.send(response)
+        for i in range(0, len(response), 2000):
+            await message.channel.send(response[i:i+2000])
+
+
+async def send_long(ctx, text: str):
+    for i in range(0, len(text), 2000):
+        await ctx.send(text[i:i+2000])
 
 
 def run():

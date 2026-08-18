@@ -1,5 +1,6 @@
 import os
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 
 SYSTEM_PROMPT = """You are an expert sports and nutrition coach. You analyze data from my Garmin watch and provide personalized, constructive, and actionable advice.
 
@@ -13,15 +14,12 @@ Your advice covers:
 
 Always respond in French, concisely and actionably. Be direct but encouraging."""
 
-def get_model():
-    genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-    return genai.GenerativeModel(
-        model_name="gemini-2.0-flash",
-        system_instruction=SYSTEM_PROMPT,
-    )
-
 def ask_coach(question: str, context: str) -> str:
-    model = get_model()
+    client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
     prompt = f"{context}\n\n---\n\nUser question: {question}"
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(
+        model="gemini-3.6-flash",
+        contents=prompt,
+        config=types.GenerateContentConfig(system_instruction=SYSTEM_PROMPT),
+    )
     return response.text

@@ -1,6 +1,6 @@
 # 🏃 Garmin Coach
 
-Personal Discord bot that fetches Garmin Connect data and acts as your sports and nutrition coach via Gemini 2.0 Flash.
+Personal Discord bot that fetches Garmin Connect data and acts as your sports and nutrition coach via Gemini 3.6 Flash.
 
 ## 🛠 Stack
 
@@ -9,14 +9,14 @@ Personal Discord bot that fetches Garmin Connect data and acts as your sports an
 - **SQLAlchemy** — ORM, no raw SQL queries
 - **garminconnect** — unofficial lib for the Garmin Connect API
 - **discord.py** — bot interface
-- **google-generativeai** — Gemini 2.0 Flash
+- **google-genai** — Gemini 3.6 Flash
 
 ## 📁 Structure
 
 ```
 main.py                  # Entry point: starts the bot or runs a sync
 db/models.py             # SQLAlchemy models (Activity, Sleep, DailyStats)
-garmin/fetcher.py        # Garmin Connect client with session cache
+garmin/fetcher.py        # Garmin Connect client
 garmin/sync.py           # Syncs Garmin data → PostgreSQL
 coach/context_builder.py # Builds text context from the database
 coach/llm.py             # Gemini call with coach system prompt
@@ -69,4 +69,4 @@ You can also send any free-text message and the coach will answer based on your 
 - The context sent to the LLM is built in `coach/context_builder.py`
 - No raw SQL — always go through SQLAlchemy
 - Raw Garmin data is stored in the `raw` JSON column for re-parsing without re-fetching
-- The Garmin session is cached in `garmin_session.json` (gitignored) to avoid re-logging in every time
+- Launch the bot with `start_bot.bat` (double-click) or `python main.py`
